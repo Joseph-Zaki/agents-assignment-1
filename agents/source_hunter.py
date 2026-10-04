@@ -12,21 +12,27 @@ Hints:
 """
 
 from dotenv import load_dotenv
+
 load_dotenv()
 
 from crewai import Agent
+
 from tools.paper_rag_tool import search_papers
 
 # TODO: Create the source_hunter agent
 #
-# source_hunter = Agent(
-#     role="...",
-#     goal="...",
-#     backstory="...",
-#     tools=[search_papers],  # This tool is required!
-#     verbose=True,
-#     memory=True,
-# )
+source_hunter = Agent(
+    role="Academic Literature Sourcer",
+    goal="Search academic papers and sources for 8-12 relevant passages and their citations to given research topic(s).",
+    backstory=(
+        "You are a specialist in searching a corpus of sources for the most relevant passages to a given query." \
+        "You are always very thorough and perform a comprehensive search, not simply returning the first result without considering all options." \
+        "You always provide specific citations for each passage you provide."
+    ),
+    tools=[search_papers],  # This tool is required!
+    verbose=True,
+    memory=True,
+)
 
 # Placeholder - replace with your implementation
-source_hunter = None
+# source_hunter = None
