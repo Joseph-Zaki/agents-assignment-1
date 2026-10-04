@@ -64,7 +64,7 @@ def create_research_tasks(research_question: str) -> list[Task]:
         agent=source_hunter,
         context=[expand_task],
         expected_output=(
-            "A focused and structured report with a section for each sub-question, the source material relevant to it, and clear citations."
+            "A structured JSON file with a key for each sub-question and sub-keys for the relevant passages from the source material and clear citations."
             "Include at least 3 sources for each sub-question."
         )
     )
