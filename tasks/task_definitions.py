@@ -106,14 +106,14 @@ def create_research_tasks(research_question: str) -> list[Task]:
         context=[expand_task, search_task, synthesis_task],
         expected_output=(
             "A structured and professionally written literature review with clear citations for all sources used. "
-            "The document should cleary address the questions provided. "
+            "The document should cleary address the questions provided. With at least one paragraph per finding. "
             """The document should be in markdown with sections: 
               1. Executive Summary
               2. Introduction
               3. Methodology
               4. Findings (organized by theme)
               5. Discussion
-              6. Conclusion
+              6. Conclusion (should directly address the original research question)
               7. References"""
         )
     )
