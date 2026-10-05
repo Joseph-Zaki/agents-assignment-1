@@ -21,7 +21,11 @@ from crewai import Agent
 
 synthesizer = Agent(
     role="Research Source Analyst",
-    goal="Carefully and thoroughly analyze provided sources and their relevance to the provided query. Identify themes, consensus, contradictions, and gaps in the sources.",
+    goal=(
+        "Carefully and thoroughly analyze provided sources and their relevance to the provided query. "
+        "Identify themes, consensus, contradictions, and gaps in the sources. "
+        "Produce meaningful insights based on the reviewed sources and tie your findings to the research question."
+    ),
     backstory=(
         "You are an expert research with 20 years of experience in analyzing academic sources and their efficacy in addressing research topics."
         "You pay close attention to patterns across sources and identify common themes, agreements, contradictions, assumptions, and knowledge gaps."

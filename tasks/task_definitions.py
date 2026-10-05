@@ -40,9 +40,9 @@ def create_research_tasks(research_question: str) -> list[Task]:
     #
     expand_task = Task(
         description=(
-            f"Given the following question: \'{research_question}\', break down the research question into smaller sub-questions."
-            "The sub-questions should be narrow conceptually and clearly ask for information that will inform the answer to the larger question."
-            "Identify relevant keywords for each sub-question and suggest possible search paths for determining the answer to the research question."
+            f"Given the following question: \'{research_question}\', break down the research question into smaller sub-questions. "
+            "The sub-questions should be narrow conceptually and clearly ask for information that will inform the answer to the larger question. "
+            "Identify relevant keywords for each sub-question and suggest possible search paths for determining the answer to the research question. "
             "Make sure the sub-questions adequately capture all information needed to answer the research question."
         ),
         agent=query_expander,
@@ -57,15 +57,15 @@ def create_research_tasks(research_question: str) -> list[Task]:
     #
     search_task = Task(
         description=(
-            "Use the search_papers tool to research each of the sub-questions in the provided expanded query."
-            "Return only content relevant to each question and clearly identify the source of each piece of information."
+            "Use the search_papers tool to research each of the sub-questions in the provided expanded query. "
+            "Return only content relevant to each question and clearly identify the source of each piece of information. "
             "For each source found, briefly explain how it addresses the topic."
         ),
         agent=source_hunter,
         context=[expand_task],
         expected_output=(
             "A structured JSON file with a key for each sub-question and sub-keys for the relevant passages from the source material and clear citations."
-            "Include at least 3 sources for each sub-question."
+            "Include at least 3 sources for each sub-question and at least 8-12 relevant passages"
         )
     )
 
@@ -77,9 +77,10 @@ def create_research_tasks(research_question: str) -> list[Task]:
     #
     synthesis_task = Task(
         description=(
-            "Using the research provided, synthesize the findings into themes."
-            "Clearly identify the relevant themes, debates, and gaps across the provided sources."
-            "Call out any discrepancies and assumptions."
+            "Using the research provided, synthesize the findings into themes. "
+            "Clearly identify the relevant themes, debates, and gaps across the provided sources. "
+            "Call out any discrepancies and assumptions. "
+            "Produce an original, critical analysis keeping in mind that the aim is to address the research question."
         ),
         agent=synthesizer,
         context=[expand_task, search_task],
@@ -99,8 +100,10 @@ def create_research_tasks(research_question: str) -> list[Task]:
     report_task = Task(
         description=(
             "Using the provided expanded query, the identified relevant sources, and the synthesis report, write a clear and structured literature review "
-            "addressing the questions and themes in the expanded query. Make sure to clearly cite sources used. Discuss how different sources support "
+            "addressing the research question. Make sure to clearly and properly cite sources used. Discuss how different sources support "
             "each other and interact. Identify any gaps in the currently available literature."
+            "Separate each finding theme into a sub-section of \'Findings\', do not directly label them \'Theme\'."
+            "Do not include hypothetical links or other info. Do not include notes to me, this should be publication ready."
         ),
         agent=report_writer,
         context=[expand_task, search_task, synthesis_task],
@@ -111,10 +114,10 @@ def create_research_tasks(research_question: str) -> list[Task]:
               1. Executive Summary
               2. Introduction
               3. Methodology
-              4. Findings (organized by theme)
+              4. Findings (organized by theme in subsections)
               5. Discussion
               6. Conclusion (should directly address the original research question)
-              7. References"""
+              7. References (proper academic citations)"""
         )
     )
 
